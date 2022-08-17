@@ -7,21 +7,19 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
 
 public class DeliverToTest {
-
     @Test
-    public void deliverToFunctionality() {
-        addingSystemProperty();
-
+    public void verifyIfAmericanAddressIsPresent() {
         WebDriver webDriver = new ChromeDriver();
-
         webDriver.get("https://www.amazon.com/");
-
         webDriver.manage().window().maximize();
+
+        webDriver.navigate().refresh();
 
         WebElement clickOnLogoDeliverTo = webDriver.findElement(By.id("nav-global-location-popover-link"));
         clickOnLogoDeliverTo.click();
@@ -39,31 +37,24 @@ public class DeliverToTest {
         WebElement clickOnContinueButton = webDriver.findElement(By.xpath("//*[@id=\"a-popover-1\"]/div/div[2]/span/span"));
         clickOnContinueButton.click();
 
-//        Assert.assertTrue(clickOnContinueButton.isDisplayed());
+        webDriver.navigate().refresh();
 
-//        WebElement clickOnChangeAddressButton = webDriver.findElement(By.xpath("//*[@id=\"nav-main\"]/div[1]/div/div/div[3]/span[2]/span"));
-//
-//        if (clickOnChangeAddressButton.isDisplayed()) {
-//            clickOnChangeAddressButton.click();
-//        }
+        WebElement checkAddress = new WebDriverWait(webDriver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOfElementLocated(By.id("glow-ingress-line2")));
 
+        Assert.assertEquals(checkAddress.getText(), "Juneau 99801" + "\u200C");
 
-//        WebElement shouldBeJuneauAddress = new WebDriverWait(webDriver, Duration.ofSeconds(10))
-//                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(),\"Juneau 99801\")]")));
-//
-//        Assert.assertEquals("Juneau 99801", shouldBeJuneauAddress.getText());
-
-        webDriver.quit();
         webDriver.close();
+        webDriver.quit();
     }
 
     @Test
     public void verifyIfPolandIsPresent() {
-        addingSystemProperty();
-
         WebDriver webDriver = new ChromeDriver();
         webDriver.get("https://www.amazon.com/");
         webDriver.manage().window().maximize();
+
+        webDriver.navigate().refresh();
 
         WebElement clickOnLogoDeliverTo = webDriver.findElement(By.id("nav-global-location-popover-link"));
         clickOnLogoDeliverTo.click();
@@ -84,8 +75,6 @@ public class DeliverToTest {
 
     @Test
     public void verifyShippingAddressToSelectedCountry() {
-        addingSystemProperty();
-
         WebDriver webDriver = new ChromeDriver();
         webDriver.get("https://www.amazon.com/");
         webDriver.manage().window().maximize();
@@ -100,17 +89,26 @@ public class DeliverToTest {
 
         WebElement clickOnSpain = new WebDriverWait(webDriver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated(By.id("GLUXCountryList_209")));
+
+        Assert.assertEquals(clickOnSpain.getText(), "Spain");
+
         clickOnSpain.click();
 
-        WebElement clickOnDoneButton =webDriver.findElement(By.xpath("//*[@id=\"a-popover-1\"]/div/div[2]/span/span"));
+        WebElement clickOnDoneButton = webDriver.findElement(By.xpath("//*[@id=\"a-popover-1\"]/div/div[2]/span/span/span/button"));
         clickOnDoneButton.click();
 
-        WebElement clickOnAnyElement = webDriver.findElement(By.xpath("//*[@id=\"-3HXN1GB_8cWPmgkzjtQ7w\"]/div[2]/a/div/img"));
+        webDriver.navigate().refresh();
+
+        WebElement clickOnAnyElement = webDriver.findElement(By.xpath("\"//*[@id=\\\"BYdQro8WUd1fZv2motiZCQ\\\"]/div[2]/div[1]/div[2]\""));
 //        WebElement clickOnAnyElement = new WebDriverWait(webDriver, Duration.ofSeconds(10))
-//                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"-3HXN1GB_8cWPmgkzjtQ7w\"]/div[2]/a/div/img")));
+//                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"BYdQro8WUd1fZv2motiZCQ\"]/div[2]/div[1]/div[2]")));
         clickOnAnyElement.click();
+
+//        webDriver.close();
+//        webDriver.quit();
     }
 
+    @BeforeTest
     public void addingSystemProperty() {
         System.setProperty(
                 "webdriver.chrome.driver",
