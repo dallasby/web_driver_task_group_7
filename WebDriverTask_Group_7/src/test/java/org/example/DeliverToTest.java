@@ -61,7 +61,8 @@ public class DeliverToTest {
 
         Assert.assertTrue(clickOnLogoDeliverTo.isDisplayed());
 
-        WebElement clickOnCountriesDropdown = webDriver.findElement(By.id("GLUXCountryListDropdown"));
+        WebElement clickOnCountriesDropdown = new WebDriverWait(webDriver, Duration.ofSeconds(5))
+                .until(ExpectedConditions.visibilityOfElementLocated(By.id("GLUXCountryListDropdown")));
         clickOnCountriesDropdown.click();
 
         WebElement checkPoland = new WebDriverWait(webDriver, Duration.ofSeconds(10))
@@ -84,10 +85,11 @@ public class DeliverToTest {
 
         Assert.assertTrue(clickOnLogoDeliverTo.isDisplayed());
 
-        WebElement clickOnCountriesDropdown = webDriver.findElement(By.id("GLUXCountryListDropdown"));
+        WebElement clickOnCountriesDropdown = new WebDriverWait(webDriver, Duration.ofSeconds(5))
+                .until(ExpectedConditions.visibilityOfElementLocated(By.id("GLUXCountryListDropdown")));
         clickOnCountriesDropdown.click();
 
-        WebElement clickOnSpain = new WebDriverWait(webDriver, Duration.ofSeconds(10))
+        WebElement clickOnSpain = new WebDriverWait(webDriver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.visibilityOfElementLocated(By.id("GLUXCountryList_209")));
 
         Assert.assertEquals(clickOnSpain.getText(), "Spain");
@@ -99,13 +101,23 @@ public class DeliverToTest {
 
         webDriver.navigate().refresh();
 
-        WebElement clickOnAnyElement = webDriver.findElement(By.xpath("\"//*[@id=\\\"BYdQro8WUd1fZv2motiZCQ\\\"]/div[2]/div[1]/div[2]\""));
-//        WebElement clickOnAnyElement = new WebDriverWait(webDriver, Duration.ofSeconds(10))
-//                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"BYdQro8WUd1fZv2motiZCQ\"]/div[2]/div[1]/div[2]")));
+        WebElement clickOnAnyElement = webDriver.findElement(By.xpath("//img[contains(@alt,\"Keyboards\")]"));
         clickOnAnyElement.click();
 
-//        webDriver.close();
-//        webDriver.quit();
+        webDriver.navigate().refresh();
+
+        WebElement clickOnFirstElementOnWebPage = new WebDriverWait(webDriver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOfElementLocated(By
+                        .xpath("//img[contains(@alt,'Sponsored Ad - Fiodio Mechanical Gaming Keyboard, LED Rainbow Gaming Backlit, 104 Anti-ghosting Keys, Quick-Response Black...')][1]")));
+        clickOnFirstElementOnWebPage.click();
+
+        WebElement verifyThatValueIsSpain = new WebDriverWait(webDriver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"amazonGlobal_feature_div\"]/span[1]")));
+
+        Assert.assertEquals(verifyThatValueIsSpain.getText(), "No Import Fees Deposit & $13.74 Shipping to Spain");
+
+        webDriver.close();
+        webDriver.quit();
     }
 
     @BeforeTest
