@@ -1,5 +1,6 @@
 package org.example;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -7,18 +8,25 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
 
 public class DeliverToTest {
+    @AfterTest
+    public void shutDownWebDriver() {
+        WebDriver webDriver = new ChromeDriver();
+        webDriver.quit();
+    }
+
     @Test
     public void verifyIfAmericanAddressIsPresent() {
+        WebDriverManager.chromedriver().setup();
         WebDriver webDriver = new ChromeDriver();
+
         webDriver.get("https://www.amazon.com/");
         webDriver.manage().window().maximize();
-
         webDriver.navigate().refresh();
 
         WebElement clickOnLogoDeliverTo = webDriver.findElement(By.id("nav-global-location-popover-link"));
@@ -43,17 +51,15 @@ public class DeliverToTest {
                 .until(ExpectedConditions.visibilityOfElementLocated(By.id("glow-ingress-line2")));
 
         Assert.assertEquals(checkAddress.getText(), "Juneau 99801" + "\u200C");
-
-        webDriver.close();
-        webDriver.quit();
     }
 
     @Test
     public void verifyIfPolandIsPresent() {
+        WebDriverManager.chromedriver().setup();
         WebDriver webDriver = new ChromeDriver();
+
         webDriver.get("https://www.amazon.com/");
         webDriver.manage().window().maximize();
-
         webDriver.navigate().refresh();
 
         WebElement clickOnLogoDeliverTo = webDriver.findElement(By.id("nav-global-location-popover-link"));
@@ -69,14 +75,13 @@ public class DeliverToTest {
                 .until(ExpectedConditions.visibilityOfElementLocated(By.id("GLUXCountryList_178")));
 
         Assert.assertEquals(checkPoland.getText(), "Poland");
-
-        webDriver.close();
-        webDriver.quit();
     }
 
     @Test
     public void verifyShippingAddressToSelectedCountry() {
+        WebDriverManager.chromedriver().setup();
         WebDriver webDriver = new ChromeDriver();
+
         webDriver.get("https://www.amazon.com/");
         webDriver.manage().window().maximize();
 
@@ -115,16 +120,5 @@ public class DeliverToTest {
                 .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"amazonGlobal_feature_div\"]/span[1]")));
 
         Assert.assertEquals(verifyThatValueIsSpain.getText(), "No Import Fees Deposit & $13.74 Shipping to Spain");
-
-        webDriver.close();
-        webDriver.quit();
-    }
-
-    @BeforeTest
-    public void addingSystemProperty() {
-        System.setProperty(
-                "webdriver.chrome.driver",
-                "C:\\Users\\pavel\\Desktop\\web_driver_task_group_7\\web_driver_task_group_7\\WebDriverTask_Group_7\\src\\test\\resources\\webdriver\\chromedriver.exe"
-        );
     }
 }
