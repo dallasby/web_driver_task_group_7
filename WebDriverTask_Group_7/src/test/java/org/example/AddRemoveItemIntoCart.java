@@ -1,5 +1,6 @@
 package org.example;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,6 +17,7 @@ public class AddRemoveItemIntoCart {
 
     private WebDriver initWebdriver() {
 
+        WebDriverManager.chromedriver().setup();
         WebDriver localWebDriver = new ChromeDriver();
         localWebDriver.get("https://amazon.com");
         localWebDriver.manage().window().maximize();
@@ -25,19 +27,14 @@ public class AddRemoveItemIntoCart {
 
     private void initCart(WebDriver cartWebdriver) {
 
-        WebElement openCategory = new WebDriverWait(cartWebdriver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//img[@alt=\"Headsets\"]")));
+        WebElement openCategory = new WebDriverWait(cartWebdriver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//img[@alt=\"Headsets\"]")));
         openCategory.click();
 
-        WebElement openItem = new WebDriverWait(cartWebdriver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//img[starts-with(@alt, 'Sponsored Ad - Gaming Headset')]")));
+        WebElement openItem = new WebDriverWait(cartWebdriver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//img[starts-with(@alt, 'Sponsored Ad - Gaming Headset')]")));
         openItem.click();
 
-        WebElement addItemToCart = new WebDriverWait(cartWebdriver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@id=\"add-to-cart-button\"]")));
+        WebElement addItemToCart = new WebDriverWait(cartWebdriver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@id=\"add-to-cart-button\"]")));
         addItemToCart.click();
-    }
-
-    @BeforeTest
-    public void addingSystemProperty() {
-        System.setProperty("webdriver.chrome.driver","src\\test\\resources\\webdriver\\chromedriver.exe");
     }
 
     @Test
@@ -75,10 +72,10 @@ public class AddRemoveItemIntoCart {
         Assert.assertEquals(addToCartItemQuantity.getText(), "1");
         addToCartItemQuantity.click();
 
-        WebElement removeItemFromCart = new WebDriverWait(webDriver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@value=\"Delete\"]")));
+        WebElement removeItemFromCart = new WebDriverWait(webDriver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@value=\"Delete\"]")));
         removeItemFromCart.click();
 
-        WebElement removeFromCartConformationText = new WebDriverWait(webDriver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h1[contains(text(), 'Your Amazon Cart is empty.')]")));
+        WebElement removeFromCartConformationText = new WebDriverWait(webDriver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h1[contains(text(), 'Your Amazon Cart is empty.')]")));
         Assert.assertTrue(removeFromCartConformationText.isDisplayed());
         Assert.assertEquals(removeFromCartConformationText.getText(), "Your Amazon Cart is empty.");
 
