@@ -44,7 +44,7 @@ public class FilteringAndSearchingTest {
         List<WebElement> items = webDriverWait
                 .until(ExpectedConditions.visibilityOfAllElementsLocatedBy(
                         By.xpath("//div[contains(@class, 's-main-slot s-result-list')]//h2//a//span[starts-with(text(), 'Razer')][@class='a-size-medium a-color-base a-text-normal']")));
-        assertEquals(items.size(), items.stream().map(WebElement::getText).filter(item -> item.contains("Razer")).count());
+        assertEquals(items.size(), items.stream().map(WebElement::getText).filter(item -> item.contains("Razer")).count(), "Filter by brand returns unexpected items.");
     }
 
     @Test
@@ -60,7 +60,8 @@ public class FilteringAndSearchingTest {
                 .until(ExpectedConditions.visibilityOfElementLocated
                         (By.xpath("//span[@data-component-type='s-search-results']")));
         List<WebElement> webElements = searchResults.findElements(By.xpath("//div[@data-component-type='s-search-result']//span[@class='a-price']/span[@class='a-offscreen']"));
-        assertTrue(webElements.stream().map(priceElement -> priceElement.getAttribute("textContent")).map(price -> price.substring(1)).mapToDouble(Double::valueOf).allMatch(price -> price >= 10. && price <= 15.));
+        assertTrue(webElements.stream().map(priceElement -> priceElement.getAttribute("textContent")).map(price -> price.substring(1)).mapToDouble(Double::valueOf).allMatch(price -> price >= 10. && price <= 15.),
+                "Filter by price returns items with price out of boundary.");
     }
 
     @Test
@@ -84,7 +85,7 @@ public class FilteringAndSearchingTest {
         List<WebElement> webElements = searchResults.findElements(By.xpath("//div[@data-component-type='s-search-result']//div[contains(@class, 's-card-container')]//span[@class='a-price']/span[@class='a-offscreen']"));
         List<Double> prices = webElements.stream().map(priceElement -> priceElement.getAttribute("textContent")).map(price -> price.substring(1)).mapToDouble(Double::valueOf).boxed().collect(Collectors.toList());
         assertFalse(prices.isEmpty());
-        assertTrue(Ordering.natural().isOrdered(prices.subList(0, prices.size() - 4)));//ignore sponsored items
+        assertTrue(Ordering.natural().isOrdered(prices.subList(0, prices.size() - 4)), "Sorting by low to high price returns wrong sorting order.");//ignore sponsored items
     }
 
     @AfterClass
