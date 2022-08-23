@@ -18,6 +18,7 @@ public class AddRemoveItemIntoCart {
     private WebDriver initWebdriver() {
 
         WebDriverManager.chromedriver().setup();
+        WebDriverManager.chromedriver().clearDriverCache();
         WebDriver localWebDriver = new ChromeDriver();
         localWebDriver.get("https://amazon.com");
         localWebDriver.manage().window().maximize();
@@ -46,11 +47,10 @@ public class AddRemoveItemIntoCart {
 
         WebElement addToCartConformationText = webDriver.findElement(By.xpath("//span[contains(text(), 'Added to Cart')]"));
         Assert.assertTrue(addToCartConformationText.isDisplayed());
-        Assert.assertEquals("Added to Cart", addToCartConformationText.getText());
 
         WebElement addToCartItemQuantity = webDriver.findElement(By.xpath("//span[@id=\"nav-cart-count\" and text()=\"1\"]"));
         Assert.assertTrue(addToCartItemQuantity.isDisplayed());
-        Assert.assertEquals("1", addToCartItemQuantity.getText());
+
 
         webDriver.close();
         webDriver.quit();
@@ -77,11 +77,10 @@ public class AddRemoveItemIntoCart {
 
         WebElement removeFromCartConformationText = new WebDriverWait(webDriver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h1[contains(text(), 'Your Amazon Cart is empty.')]")));
         Assert.assertTrue(removeFromCartConformationText.isDisplayed());
-        Assert.assertEquals(removeFromCartConformationText.getText(), "Your Amazon Cart is empty.");
 
         WebElement removeFromCartFinalPrice = webDriver.findElement(By.xpath("//span[contains(text(), \"$0.00\")]"));
         Assert.assertTrue(removeFromCartFinalPrice.isDisplayed());
-        Assert.assertEquals(removeFromCartFinalPrice.getText(), "$0.00");
+
 
         webDriver.close();
         webDriver.quit();
