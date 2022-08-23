@@ -1,6 +1,7 @@
 package org.example;
 
 import com.google.common.collect.Ordering;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -24,15 +25,10 @@ public class FilteringAndSearchingTest {
 
     @BeforeClass
     public void startWebDriver() {
-        System.setProperty(
-                "webdriver.chrome.driver",
-                "C:\\Users\\andrz\\IdeaProjects\\web_driver_task_group_7\\src\\test\\resources\\webdriver\\chromedriver"
-        );
-
+        WebDriverManager.chromedriver().setup();
         webDriver = new ChromeDriver();
-        webDriver.get("https://amazon.com");
+        webDriver.get("https://www.amazon.com/");
         webDriver.manage().window().maximize();
-
         webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(15));
     }
 
@@ -47,7 +43,7 @@ public class FilteringAndSearchingTest {
         brandsRefinements.findElement(By.xpath("//li[contains(@id, 'Razer')]//a")).click();
         List<WebElement> items = webDriverWait
                 .until(ExpectedConditions.visibilityOfAllElementsLocatedBy(
-                        By.xpath("//div[contains(@class, 's-main-slot s-result-list')]//h2//a//span")));
+                        By.xpath("//div[contains(@class, 's-main-slot s-result-list')]//h2//a//span[starts-with(text(), 'Razer')][@class='a-size-medium a-color-base a-text-normal']")));
         assertEquals(items.size(), items.stream().map(WebElement::getText).filter(item -> item.contains("Razer")).count());
     }
 
