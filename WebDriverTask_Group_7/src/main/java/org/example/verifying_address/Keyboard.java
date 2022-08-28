@@ -1,7 +1,7 @@
 package org.example.verifying_address;
 
 import com.codeborne.selenide.Selenide;
-import org.example.pageobject.FirstElementInKeyboardDropDown;
+import org.example.dropdown_page.spain.FirstElementInKeyboardDropDown;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;

@@ -1,4 +1,4 @@
-package org.example.pageobject;
+package org.example.dropdown_page.spain;
 
 import com.codeborne.selenide.Selenide;
 import org.example.dropdown_page.spain.SpainAsText;
