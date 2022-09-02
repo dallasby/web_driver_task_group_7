@@ -2,7 +2,6 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-
 import base.TestBase;
 
 public class HomePage extends TestBase {
@@ -13,14 +12,12 @@ public class HomePage extends TestBase {
 		searchBar.sendKeys("@##!#@##35446464646");
 		WebElement searchButton = driver.findElement(By.xpath("//input[@id='nav-search-submit-button']"));
 		searchButton.click();
-
 		return new NoProductPage();
 	}
 
 	public LaptopSearchPage laptopSearch() {
 
 		driver.findElement(By.xpath("//a[@id='nav-logo-sprites']")).click();
-		// driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		WebElement searchBar = driver.findElement(By.xpath("//input[@id='twotabsearchtextbox']"));
 		searchBar.click();
 		searchBar.sendKeys("Laptop");

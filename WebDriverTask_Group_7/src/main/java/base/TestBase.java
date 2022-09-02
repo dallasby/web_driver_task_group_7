@@ -1,11 +1,10 @@
 package base;
 
-import java.time.Duration;
-
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
+import java.time.Duration;
 
 public class TestBase {
 
@@ -20,8 +19,8 @@ public class TestBase {
 			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 		}
 	}
-	
-	
-	
-	
+	public static void tearDown(){
+
+		driver.quit();
+	}
 }
