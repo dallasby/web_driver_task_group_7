@@ -14,13 +14,13 @@ public class CategoryPage extends BasePage {
         super(webDriver);
     }
 
-    private WebElement Item;
+    private WebElement item;
 
     public ProductPage openProduct() {
-        this.Item = new WebDriverWait(webDriver, Duration.ofSeconds(10))
+        this.item = new WebDriverWait(webDriver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated
                         (By.xpath("//img[starts-with(@alt, \"Sponsored Ad - AIHOOR Gaming Headset with Virtual\")]")));
-        this.Item.click();
+        this.item.click();
         return new ProductPage(webDriver);
     }
 }

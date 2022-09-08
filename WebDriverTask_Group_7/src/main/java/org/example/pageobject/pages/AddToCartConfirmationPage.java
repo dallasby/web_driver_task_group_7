@@ -14,27 +14,24 @@ public class AddToCartConfirmationPage extends BasePage {
         super(webDriver);
     }
 
-    private WebElement AddedToCartConfirmationText = new WebDriverWait(webDriver, Duration.ofSeconds(10))
+    private WebElement addedToCartConfirmationText = new WebDriverWait(webDriver, Duration.ofSeconds(10))
             .until(ExpectedConditions
                     .visibilityOfElementLocated(By.xpath("//span[contains(text(), 'Added to Cart')]")));;
 
-    private WebElement CartItemsCount = new WebDriverWait(webDriver, Duration.ofSeconds(10))
+    private WebElement cartItemsCount = new WebDriverWait(webDriver, Duration.ofSeconds(10))
             .until(ExpectedConditions
                     .visibilityOfElementLocated(By.xpath("//span[@id=\"nav-cart-count\" and text()=\"1\"]")));
 
     public String checkIfAddedToCartText(){
-        return AddedToCartConfirmationText.getText();
+        return this.addedToCartConfirmationText.getText();
     }
 
     public String checkIfAddedToCartCount(){
-        return CartItemsCount.getText();
+        return this.cartItemsCount.getText();
     }
 
     public CartPage openCart() {
-        this.CartItemsCount = new WebDriverWait(webDriver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOfElementLocated
-                        (By.xpath("//span[@id=\"nav-cart-count\" and text()=\"1\"]")));
-        this.CartItemsCount.click();
+        this.cartItemsCount.click();
         return new CartPage(webDriver);
     }
 }

@@ -14,13 +14,13 @@ public class ProductPage extends BasePage {
         super(webDriver);
     }
 
-    private WebElement AddToCartButton;
+    private WebElement addToCartButton;
 
     public AddToCartConfirmationPage addProductToCart() {
-        this.AddToCartButton = new WebDriverWait(webDriver, Duration.ofSeconds(10))
+        this.addToCartButton = new WebDriverWait(webDriver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated
                         (By.xpath("//input[@id=\"add-to-cart-button\"]")));
-        this.AddToCartButton.click();
+        this.addToCartButton.click();
         return new AddToCartConfirmationPage(webDriver);
     }
 }

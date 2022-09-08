@@ -14,8 +14,8 @@ public class AddRemoveItemIntoCartTest extends BaseTest {
     private void addToCartTestMethod(WebDriver webDriver) {
         webDriver.manage().deleteAllCookies();
 
-        HomePage AmazonPage = new HomePage(webDriver);
-        this.confirmationAddPage = AmazonPage.open()
+        HomePage amazonPage = new HomePage(webDriver);
+        this.confirmationAddPage = amazonPage.open()
                 .openCategory()
                 .openProduct()
                 .addProductToCart();

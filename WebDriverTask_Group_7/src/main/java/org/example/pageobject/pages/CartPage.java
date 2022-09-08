@@ -14,13 +14,13 @@ public class CartPage extends BasePage {
         super(webDriver);
     }
 
-    private WebElement RemoveButton;
+    private WebElement removeButton;
 
     public RemoveFromCartConfirmationPage removeProduct() {
-        this.RemoveButton = new WebDriverWait(webDriver, Duration.ofSeconds(10))
+        this.removeButton = new WebDriverWait(webDriver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated
                         (By.xpath("//input[@value=\"Delete\"]")));
-        this.RemoveButton.click();
+        this.removeButton.click();
         return new RemoveFromCartConfirmationPage(webDriver);
     }
 }

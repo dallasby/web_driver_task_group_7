@@ -14,13 +14,13 @@ public class HomePage extends BasePage {
         super(webDriver);
     }
 
-    private WebElement Category;
+    private WebElement category;
 
     public CategoryPage openCategory() {
-        this.Category = new WebDriverWait(webDriver, Duration.ofSeconds(10))
+        this.category = new WebDriverWait(webDriver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated
                         (By.xpath("//img[@alt=\"Headsets\"]")));
-        this.Category.click();
+        this.category.click();
         return new CategoryPage(webDriver);
     }
 

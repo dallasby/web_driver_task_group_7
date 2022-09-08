@@ -14,20 +14,20 @@ public class RemoveFromCartConfirmationPage extends BasePage {
         super(webDriver);
     }
 
-    private WebElement RemovalConfirmationText = new WebDriverWait(webDriver, Duration.ofSeconds(10))
+    private WebElement removalConfirmationText = new WebDriverWait(webDriver, Duration.ofSeconds(10))
             .until(ExpectedConditions
                            .visibilityOfElementLocated(By.xpath("//h1[contains(text(), 'Your Amazon Cart is empty.')]")));
 
-    private WebElement RemovalFinalPrice = new WebDriverWait(webDriver, Duration.ofSeconds(10))
+    private WebElement removalFinalPrice = new WebDriverWait(webDriver, Duration.ofSeconds(10))
             .until(ExpectedConditions
                            .visibilityOfElementLocated(By.xpath("//span[contains(text(), \"$0.00\")]")));
 
     public String checkIfRemovedFromCartPrice() {
-        return RemovalFinalPrice.getText();
+        return this.removalFinalPrice.getText();
     }
 
     public String checkIfRemovedFromCartText() {
-        return RemovalConfirmationText.getText();
+        return this.removalConfirmationText.getText();
     }
 }
 
